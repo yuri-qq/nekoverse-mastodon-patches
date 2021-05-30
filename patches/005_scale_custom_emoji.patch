@@ -1,0 +1,59 @@
+diff --git a/app/javascript/mastodon/features/emoji/emoji.js b/app/javascript/mastodon/features/emoji/emoji.js
+index fb1a3804c..5e879a993 100644
+--- a/app/javascript/mastodon/features/emoji/emoji.js
++++ b/app/javascript/mastodon/features/emoji/emoji.js
+@@ -42,7 +42,7 @@ const emojify = (str, customEmojis = {}) => {
+         // if you want additional emoji handler, add statements below which set replacement and return true.
+         if (shortname in customEmojis) {
+           const filename = autoPlayGif ? customEmojis[shortname].url : customEmojis[shortname].static_url;
+-          replacement = `<img draggable="false" class="emojione custom-emoji" alt="${shortname}" title="${shortname}" src="${filename}" data-original="${customEmojis[shortname].url}" data-static="${customEmojis[shortname].static_url}" />`;
++          replacement = `<img draggable="false" class="emojione custom-emoji custom-emoji-scaleable" alt="${shortname}" title="${shortname}" src="${filename}" data-original="${customEmojis[shortname].url}" data-static="${customEmojis[shortname].static_url}" />`;
+           return true;
+         }
+         return false;
+diff --git a/app/javascript/styles/application.scss b/app/javascript/styles/application.scss
+index 8ebc45b62..c787cc1d2 100644
+--- a/app/javascript/styles/application.scss
++++ b/app/javascript/styles/application.scss
+@@ -26,3 +26,5 @@
+ @import 'mastodon/dashboard';
+ @import 'mastodon/rtl';
+ @import 'mastodon/accessibility';
++
++@import 'custom/scale-custom-emoji';
+diff --git a/app/javascript/styles/custom/scale-custom-emoji.scss b/app/javascript/styles/custom/scale-custom-emoji.scss
+new file mode 100644
+index 000000000..5867e5423
+--- /dev/null
++++ b/app/javascript/styles/custom/scale-custom-emoji.scss
+@@ -0,0 +1,14 @@
++.status__content {
++    overflow: visible;
++}
++
++.status__content .custom-emoji-scaleable {
++    transform: scale(1);
++    transition: linear 0.15s;
++
++    &:hover {
++        transform: scale(4);
++        transition: linear 0.15s;
++        opacity: 1;
++    }
++}
+diff --git a/app/lib/formatter.rb b/app/lib/formatter.rb
+index fd6537526..60d0e4333 100644
+--- a/app/lib/formatter.rb
++++ b/app/lib/formatter.rb
+@@ -157,9 +157,9 @@ class Formatter
+           original_url, static_url = emoji
+           replacement = begin
+             if animate
+-              image_tag(original_url, draggable: false, class: 'emojione', alt: ":#{shortcode}:", title: ":#{shortcode}:")
++              image_tag(original_url, draggable: false, class: 'emojione custom-emoji-scaleable', alt: ":#{shortcode}:", title: ":#{shortcode}:")
+             else
+-              image_tag(original_url, draggable: false, class: 'emojione custom-emoji', alt: ":#{shortcode}:", title: ":#{shortcode}:", data: { original: original_url, static: static_url })
++              image_tag(original_url, draggable: false, class: 'emojione custom-emoji custom-emoji-scaleable', alt: ":#{shortcode}:", title: ":#{shortcode}:", data: { original: original_url, static: static_url })
+             end
+           end
+           before_html = shortname_start_index.positive? ? html[0..shortname_start_index - 1] : ''
