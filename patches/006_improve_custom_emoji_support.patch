@@ -1,5 +1,5 @@
 diff --git a/app/models/custom_emoji.rb b/app/models/custom_emoji.rb
-index 7cb03b819..1985a3b60 100644
+index 7cb03b819..5ebb69b0a 100644
 --- a/app/models/custom_emoji.rb
 +++ b/app/models/custom_emoji.rb
 @@ -21,7 +21,7 @@
@@ -16,12 +16,12 @@ index 7cb03b819..1985a3b60 100644
      (?=[^[:alnum:]:]|$)/x
  
 -  IMAGE_MIME_TYPES = %w(image/png image/gif).freeze
-+  IMAGE_MIME_TYPES = %w(image/png image/gif image/webp image/jpg image/jpeg image/svg+xml).freeze
++  IMAGE_MIME_TYPES = %w(image/png image/gif image/webp image/jpeg image/svg+xml).freeze
  
    belongs_to :category, class_name: 'CustomEmojiCategory', optional: true
    has_one :local_counterpart, -> { where(domain: nil) }, class_name: 'CustomEmoji', primary_key: :shortcode, foreign_key: :shortcode
 diff --git a/app/views/admin/custom_emojis/new.html.haml b/app/views/admin/custom_emojis/new.html.haml
-index e15a07cb8..8aff384c1 100644
+index e15a07cb8..24824bbed 100644
 --- a/app/views/admin/custom_emojis/new.html.haml
 +++ b/app/views/admin/custom_emojis/new.html.haml
 @@ -7,7 +7,7 @@
@@ -29,12 +29,12 @@ index e15a07cb8..8aff384c1 100644
      = f.input :shortcode, wrapper: :with_label, label: t('admin.custom_emojis.shortcode'), hint: t('admin.custom_emojis.shortcode_hint')
    .fields-group
 -    = f.input :image, wrapper: :with_label, input_html: { accept: 'image/png' }, hint: t('admin.custom_emojis.image_hint')
-+    = f.input :image, wrapper: :with_label, input_html: { accept: 'image/png,image/gif,image/webp,image/jpg,image/jpeg,image/svg+xml' }, hint: t('admin.custom_emojis.image_hint')
++    = f.input :image, wrapper: :with_label, input_html: { accept: 'image/png,image/gif,image/webp,image/jpeg,image/svg+xml' }, hint: t('admin.custom_emojis.image_hint')
  
    .actions
      = f.button :button, t('admin.custom_emojis.upload'), type: :submit
 diff --git a/config/locales/en.yml b/config/locales/en.yml
-index d8ad5bd84..4f57ac155 100644
+index d8ad5bd84..55c342bb7 100644
 --- a/config/locales/en.yml
 +++ b/config/locales/en.yml
 @@ -344,7 +344,7 @@ en:
@@ -42,12 +42,12 @@ index d8ad5bd84..4f57ac155 100644
        enabled: Enabled
        enabled_msg: Successfully enabled that emoji
 -      image_hint: PNG up to 50KB
-+      image_hint: PNG, GIF, WebP, SVG, JPG or JPEG up to 2MB
++      image_hint: PNG, GIF, WebP, SVG or JPEG up to 2MB
        list: List
        listed: Listed
        new:
 diff --git a/config/locales/en_GB.yml b/config/locales/en_GB.yml
-index d3461474b..4278f43bd 100644
+index d3461474b..da2a22b21 100644
 --- a/config/locales/en_GB.yml
 +++ b/config/locales/en_GB.yml
 @@ -220,7 +220,7 @@ en_GB:
@@ -55,7 +55,7 @@ index d3461474b..4278f43bd 100644
        enable: Enable
        enabled_msg: Successfully enabled that emoji
 -      image_hint: PNG up to 50KB
-+      image_hint: PNG, GIF, WebP, SVG, JPG, JPEG up to 2 MB
++      image_hint: PNG, GIF, WebP, SVG or JPEG up to 2MB
        listed: Listed
        new:
          title: Add new custom emoji
