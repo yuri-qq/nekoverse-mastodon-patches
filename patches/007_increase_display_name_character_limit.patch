@@ -1,0 +1,26 @@
+diff --git a/app/models/account.rb b/app/models/account.rb
+index 2c5455d8e..98931905c 100644
+--- a/app/models/account.rb
++++ b/app/models/account.rb
+@@ -90,7 +90,7 @@ class Account < ApplicationRecord
+   # Local user validations
+   validates :username, format: { with: /\A[a-z0-9_]+\z/i }, length: { maximum: 30 }, if: -> { local? && will_save_change_to_username? && actor_type != 'Application' }
+   validates_with UnreservedUsernameValidator, if: -> { local? && will_save_change_to_username? }
+-  validates :display_name, length: { maximum: 30 }, if: -> { local? && will_save_change_to_display_name? }
++  validates :display_name, length: { maximum: 120 }, if: -> { local? && will_save_change_to_display_name? }
+   validates :note, note_length: { maximum: 500 }, if: -> { local? && will_save_change_to_note? }
+   validates :fields, length: { maximum: 4 }, if: -> { local? && will_save_change_to_fields? }
+ 
+diff --git a/app/views/settings/profiles/show.html.haml b/app/views/settings/profiles/show.html.haml
+index 4885878f0..cbbec008a 100644
+--- a/app/views/settings/profiles/show.html.haml
++++ b/app/views/settings/profiles/show.html.haml
+@@ -9,7 +9,7 @@
+ 
+   .fields-row
+     .fields-row__column.fields-group.fields-row__column-6
+-      = f.input :display_name, wrapper: :with_label, input_html: { maxlength: 30, data: { default: @account.username } }, hint: false
++      = f.input :display_name, wrapper: :with_label, input_html: { maxlength: 120, data: { default: @account.username } }, hint: false
+       = f.input :note, wrapper: :with_label, input_html: { maxlength: 500 }, hint: false
+ 
+   .fields-row
