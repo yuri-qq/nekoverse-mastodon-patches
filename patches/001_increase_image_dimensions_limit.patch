@@ -1,25 +1,25 @@
 diff --git a/app/javascript/mastodon/utils/resize_image.js b/app/javascript/mastodon/utils/resize_image.js
-index 22ff86801..f1e4a3f18 100644
+index 22ff86801..90156a366 100644
 --- a/app/javascript/mastodon/utils/resize_image.js
 +++ b/app/javascript/mastodon/utils/resize_image.js
 @@ -1,6 +1,6 @@
  import EXIF from 'exif-js';
  
 -const MAX_IMAGE_PIXELS = 2073600; // 1920x1080px
-+const MAX_IMAGE_PIXELS = 16777216; // 4096x4096px
++const MAX_IMAGE_PIXELS = 37748736; // 6144x6144px
  
  const _browser_quirks = {};
  
 diff --git a/app/models/media_attachment.rb b/app/models/media_attachment.rb
-index 3515f6895..c6a6e0cff 100644
+index 21c663e47..d566e1c2f 100644
 --- a/app/models/media_attachment.rb
 +++ b/app/models/media_attachment.rb
-@@ -59,7 +59,7 @@ class MediaAttachment < ApplicationRecord
+@@ -67,7 +67,7 @@ class MediaAttachment < ApplicationRecord
  
    IMAGE_STYLES = {
      original: {
 -      pixels: 2_073_600, # 1920x1080px
-+      pixels: 16_777_216, # 4096x4096px
++      pixels: 37_748_736, # 6144x6144px
        file_geometry_parser: FastGeometryParser,
      }.freeze,
  

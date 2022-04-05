@@ -1,17 +1,17 @@
 diff --git a/app/models/custom_emoji.rb b/app/models/custom_emoji.rb
-index 7cb03b819..5ebb69b0a 100644
+index a85feb73a..7a6b67fe8 100644
 --- a/app/models/custom_emoji.rb
 +++ b/app/models/custom_emoji.rb
-@@ -21,7 +21,7 @@
- #
- 
+@@ -23,7 +23,7 @@
  class CustomEmoji < ApplicationRecord
+   include Attachmentable
+ 
 -  LIMIT = 50.kilobytes
-+  LIMIT = 2.megabytes
++  LIMIT = 4.megabytes
  
    SHORTCODE_RE_FRAGMENT = '[a-zA-Z0-9_]{2,}'
  
-@@ -29,7 +29,7 @@ class CustomEmoji < ApplicationRecord
+@@ -31,7 +31,7 @@ class CustomEmoji < ApplicationRecord
      :(#{SHORTCODE_RE_FRAGMENT}):
      (?=[^[:alnum:]:]|$)/x
  
@@ -20,42 +20,16 @@ index 7cb03b819..5ebb69b0a 100644
  
    belongs_to :category, class_name: 'CustomEmojiCategory', optional: true
    has_one :local_counterpart, -> { where(domain: nil) }, class_name: 'CustomEmoji', primary_key: :shortcode, foreign_key: :shortcode
-diff --git a/app/views/admin/custom_emojis/new.html.haml b/app/views/admin/custom_emojis/new.html.haml
-index e15a07cb8..24824bbed 100644
---- a/app/views/admin/custom_emojis/new.html.haml
-+++ b/app/views/admin/custom_emojis/new.html.haml
-@@ -7,7 +7,7 @@
-   .fields-group
-     = f.input :shortcode, wrapper: :with_label, label: t('admin.custom_emojis.shortcode'), hint: t('admin.custom_emojis.shortcode_hint')
-   .fields-group
--    = f.input :image, wrapper: :with_label, input_html: { accept: 'image/png' }, hint: t('admin.custom_emojis.image_hint')
-+    = f.input :image, wrapper: :with_label, input_html: { accept: 'image/png,image/gif,image/webp,image/jpeg,image/svg+xml' }, hint: t('admin.custom_emojis.image_hint')
- 
-   .actions
-     = f.button :button, t('admin.custom_emojis.upload'), type: :submit
 diff --git a/config/locales/en.yml b/config/locales/en.yml
-index d8ad5bd84..55c342bb7 100644
+index 829cd61d0..0a573c2a5 100644
 --- a/config/locales/en.yml
 +++ b/config/locales/en.yml
-@@ -344,7 +344,7 @@ en:
+@@ -372,7 +372,7 @@ en:
        enable: Enable
        enabled: Enabled
        enabled_msg: Successfully enabled that emoji
--      image_hint: PNG up to 50KB
-+      image_hint: PNG, GIF, WebP, SVG or JPEG up to 2MB
+-      image_hint: PNG or GIF up to %{size}
++      image_hint: PNG, GIF, WebP, SVG or JPEG up to %{size}
        list: List
        listed: Listed
        new:
-diff --git a/config/locales/en_GB.yml b/config/locales/en_GB.yml
-index d3461474b..da2a22b21 100644
---- a/config/locales/en_GB.yml
-+++ b/config/locales/en_GB.yml
-@@ -220,7 +220,7 @@ en_GB:
-       emoji: Emoji
-       enable: Enable
-       enabled_msg: Successfully enabled that emoji
--      image_hint: PNG up to 50KB
-+      image_hint: PNG, GIF, WebP, SVG or JPEG up to 2MB
-       listed: Listed
-       new:
-         title: Add new custom emoji
