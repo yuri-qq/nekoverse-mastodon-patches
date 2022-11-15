@@ -1,18 +1,18 @@
 diff --git a/app/models/account.rb b/app/models/account.rb
-index a8c5df208..4bbc7b982 100644
+index fc7359cfc..0630e5c69 100644
 --- a/app/models/account.rb
 +++ b/app/models/account.rb
-@@ -89,7 +89,7 @@ class Account < ApplicationRecord
+@@ -90,7 +90,7 @@ class Account < ApplicationRecord
    # Local user validations
    validates :username, format: { with: /\A[a-z0-9_]+\z/i }, length: { maximum: 30 }, if: -> { local? && will_save_change_to_username? && actor_type != 'Application' }
-   validates_with UnreservedUsernameValidator, if: -> { local? && will_save_change_to_username? }
+   validates_with UnreservedUsernameValidator, if: -> { local? && will_save_change_to_username? && actor_type != 'Application' }
 -  validates :display_name, length: { maximum: 30 }, if: -> { local? && will_save_change_to_display_name? }
 +  validates :display_name, length: { maximum: 120 }, if: -> { local? && will_save_change_to_display_name? }
    validates :note, note_length: { maximum: 500 }, if: -> { local? && will_save_change_to_note? }
    validates :fields, length: { maximum: 4 }, if: -> { local? && will_save_change_to_fields? }
  
 diff --git a/app/views/settings/profiles/show.html.haml b/app/views/settings/profiles/show.html.haml
-index fe9666d84..a7be9a130 100644
+index 3067b3737..f3da719b7 100644
 --- a/app/views/settings/profiles/show.html.haml
 +++ b/app/views/settings/profiles/show.html.haml
 @@ -9,7 +9,7 @@

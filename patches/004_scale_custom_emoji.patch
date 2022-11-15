@@ -23,14 +23,10 @@ index 8ebc45b62..c787cc1d2 100644
 +@import 'custom/scale-custom-emoji';
 diff --git a/app/javascript/styles/custom/scale-custom-emoji.scss b/app/javascript/styles/custom/scale-custom-emoji.scss
 new file mode 100644
-index 000000000..5867e5423
+index 000000000..149011b7d
 --- /dev/null
 +++ b/app/javascript/styles/custom/scale-custom-emoji.scss
-@@ -0,0 +1,14 @@
-+.status__content {
-+    overflow: visible;
-+}
-+
+@@ -0,0 +1,10 @@
 +.status__content .custom-emoji-scaleable {
 +    transform: scale(1);
 +    transition: linear 0.15s;
@@ -42,18 +38,15 @@ index 000000000..5867e5423
 +    }
 +}
 diff --git a/app/lib/emoji_formatter.rb b/app/lib/emoji_formatter.rb
-index f808f3a22..78be71d09 100644
+index a9785d5f9..fa854dffa 100644
 --- a/app/lib/emoji_formatter.rb
 +++ b/app/lib/emoji_formatter.rb
-@@ -86,9 +86,9 @@ class EmojiFormatter
-     original_url, static_url = emoji
- 
-     if animate?
--      image_tag(original_url, draggable: false, class: 'emojione', alt: ":#{shortcode}:", title: ":#{shortcode}:")
-+      image_tag(original_url, draggable: false, class: 'emojione custom-emoji-scaleable', alt: ":#{shortcode}:", title: ":#{shortcode}:")
-     else
--      image_tag(original_url, draggable: false, class: 'emojione custom-emoji', alt: ":#{shortcode}:", title: ":#{shortcode}:", data: { original: original_url, static: static_url })
-+      image_tag(original_url, draggable: false, class: 'emojione custom-emoji custom-emoji-scaleable', alt: ":#{shortcode}:", title: ":#{shortcode}:", data: { original: original_url, static: static_url })
-     end
+@@ -93,7 +93,7 @@ class EmojiFormatter
    end
  
+   def image_class_names
+-    animate? ? 'emojione' : 'emojione custom-emoji'
++    animate? ? 'emojione' : 'emojione custom-emoji custom-emoji-scaleable'
+   end
+ 
+   def image_style

@@ -1,30 +1,30 @@
 diff --git a/app/models/custom_emoji.rb b/app/models/custom_emoji.rb
-index a85feb73a..7a6b67fe8 100644
+index 304805659..ab5802dd2 100644
 --- a/app/models/custom_emoji.rb
 +++ b/app/models/custom_emoji.rb
 @@ -23,7 +23,7 @@
  class CustomEmoji < ApplicationRecord
    include Attachmentable
  
--  LIMIT = 50.kilobytes
+-  LIMIT = 256.kilobytes
 +  LIMIT = 4.megabytes
  
    SHORTCODE_RE_FRAGMENT = '[a-zA-Z0-9_]{2,}'
  
-@@ -31,7 +31,7 @@ class CustomEmoji < ApplicationRecord
-     :(#{SHORTCODE_RE_FRAGMENT}):
+@@ -32,7 +32,7 @@ class CustomEmoji < ApplicationRecord
      (?=[^[:alnum:]:]|$)/x
+   SHORTCODE_ONLY_RE = /\A#{SHORTCODE_RE_FRAGMENT}\z/
  
--  IMAGE_MIME_TYPES = %w(image/png image/gif).freeze
+-  IMAGE_MIME_TYPES = %w(image/png image/gif image/webp).freeze
 +  IMAGE_MIME_TYPES = %w(image/png image/gif image/webp image/jpeg image/svg+xml).freeze
  
    belongs_to :category, class_name: 'CustomEmojiCategory', optional: true
    has_one :local_counterpart, -> { where(domain: nil) }, class_name: 'CustomEmoji', primary_key: :shortcode, foreign_key: :shortcode
 diff --git a/config/locales/en.yml b/config/locales/en.yml
-index 829cd61d0..0a573c2a5 100644
+index 679e356b4..f41f98066 100644
 --- a/config/locales/en.yml
 +++ b/config/locales/en.yml
-@@ -372,7 +372,7 @@ en:
+@@ -322,7 +322,7 @@ en:
        enable: Enable
        enabled: Enabled
        enabled_msg: Successfully enabled that emoji

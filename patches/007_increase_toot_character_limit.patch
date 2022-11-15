@@ -1,5 +1,5 @@
 diff --git a/app/javascript/mastodon/features/compose/components/compose_form.js b/app/javascript/mastodon/features/compose/components/compose_form.js
-index 4620d1c43..3ff93fb16 100644
+index 6a65f44da..86d8ad6b1 100644
 --- a/app/javascript/mastodon/features/compose/components/compose_form.js
 +++ b/app/javascript/mastodon/features/compose/components/compose_form.js
 @@ -90,7 +90,7 @@ class ComposeForm extends ImmutablePureComponent {
@@ -10,8 +10,8 @@ index 4620d1c43..3ff93fb16 100644
 +    return !(isSubmitting || isUploading || isChangingUpload || length(fulltext) > 10000 || (isOnlyWhitespace && !anyMedia));
    }
  
-   handleSubmit = () => {
-@@ -273,7 +273,7 @@ class ComposeForm extends ImmutablePureComponent {
+   handleSubmit = (e) => {
+@@ -277,7 +277,7 @@ class ComposeForm extends ImmutablePureComponent {
            </div>
  
            <div className='character-counter__wrapper'>
@@ -20,30 +20,6 @@ index 4620d1c43..3ff93fb16 100644
            </div>
          </div>
  
-diff --git a/app/serializers/rest/instance_serializer.rb b/app/serializers/rest/instance_serializer.rb
-index 0dc44b623..8bd883adb 100644
---- a/app/serializers/rest/instance_serializer.rb
-+++ b/app/serializers/rest/instance_serializer.rb
-@@ -5,7 +5,7 @@ class REST::InstanceSerializer < ActiveModel::Serializer
- 
-   attributes :uri, :title, :short_description, :description, :email,
-              :version, :urls, :stats, :thumbnail,
--             :languages, :registrations, :approval_required, :invites_enabled,
-+             :languages, :registrations, :max_toot_chars, :approval_required, :invites_enabled,
-              :configuration
- 
-   has_one :contact_account, serializer: REST::AccountSerializer
-@@ -96,6 +96,10 @@ class REST::InstanceSerializer < ActiveModel::Serializer
-     Setting.min_invite_role == 'user'
-   end
- 
-+  def max_toot_chars
-+    10000
-+  end
-+
-   private
- 
-   def instance_presenter
 diff --git a/app/validators/status_length_validator.rb b/app/validators/status_length_validator.rb
 index e107912b7..6185b4fea 100644
 --- a/app/validators/status_length_validator.rb
@@ -56,4 +32,5 @@ index e107912b7..6185b4fea 100644
 +  MAX_CHARS = 10000
    URL_PLACEHOLDER_CHARS = 23
    URL_PLACEHOLDER = 'x' * 23
+ 
  
