@@ -1,52 +1,13 @@
 diff --git a/app/javascript/mastodon/features/emoji/emoji.js b/app/javascript/mastodon/features/emoji/emoji.js
-index fb1a3804c..5e879a993 100644
+index bc3dd8c60..7a4f3a16e 100644
 --- a/app/javascript/mastodon/features/emoji/emoji.js
 +++ b/app/javascript/mastodon/features/emoji/emoji.js
-@@ -42,7 +42,7 @@ const emojify = (str, customEmojis = {}) => {
-         // if you want additional emoji handler, add statements below which set replacement and return true.
-         if (shortname in customEmojis) {
+@@ -51,7 +51,7 @@ const emojifyTextNode = (node, customEmojis) => {
            const filename = autoPlayGif ? customEmojis[shortname].url : customEmojis[shortname].static_url;
--          replacement = `<img draggable="false" class="emojione custom-emoji" alt="${shortname}" title="${shortname}" src="${filename}" data-original="${customEmojis[shortname].url}" data-static="${customEmojis[shortname].static_url}" />`;
-+          replacement = `<img draggable="false" class="emojione custom-emoji custom-emoji-scaleable" alt="${shortname}" title="${shortname}" src="${filename}" data-original="${customEmojis[shortname].url}" data-static="${customEmojis[shortname].static_url}" />`;
-           return true;
-         }
-         return false;
-diff --git a/app/javascript/styles/application.scss b/app/javascript/styles/application.scss
-index 8ebc45b62..c787cc1d2 100644
---- a/app/javascript/styles/application.scss
-+++ b/app/javascript/styles/application.scss
-@@ -26,3 +26,5 @@
- @import 'mastodon/dashboard';
- @import 'mastodon/rtl';
- @import 'mastodon/accessibility';
-+
-+@import 'custom/scale-custom-emoji';
-diff --git a/app/javascript/styles/custom/scale-custom-emoji.scss b/app/javascript/styles/custom/scale-custom-emoji.scss
-new file mode 100644
-index 000000000..149011b7d
---- /dev/null
-+++ b/app/javascript/styles/custom/scale-custom-emoji.scss
-@@ -0,0 +1,10 @@
-+.status__content .custom-emoji-scaleable {
-+    transform: scale(1);
-+    transition: linear 0.15s;
-+
-+    &:hover {
-+        transform: scale(4);
-+        transition: linear 0.15s;
-+        opacity: 1;
-+    }
-+}
-diff --git a/app/lib/emoji_formatter.rb b/app/lib/emoji_formatter.rb
-index a9785d5f9..fa854dffa 100644
---- a/app/lib/emoji_formatter.rb
-+++ b/app/lib/emoji_formatter.rb
-@@ -93,7 +93,7 @@ class EmojiFormatter
-   end
- 
-   def image_class_names
--    animate? ? 'emojione' : 'emojione custom-emoji'
-+    animate? ? 'emojione' : 'emojione custom-emoji custom-emoji-scaleable'
-   end
- 
-   def image_style
+           replacement = document.createElement('img');
+           replacement.setAttribute('draggable', false);
+-          replacement.setAttribute('class', 'emojione custom-emoji');
++          replacement.setAttribute('class', 'emojione custom-emoji custom-emoji-scaleable');
+           replacement.setAttribute('alt', shortname);
+           replacement.setAttribute('title', shortname);
+           replacement.setAttribute('src', filename);
