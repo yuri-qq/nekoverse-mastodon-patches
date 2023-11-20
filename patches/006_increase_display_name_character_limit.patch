@@ -1,8 +1,8 @@
 diff --git a/app/models/account.rb b/app/models/account.rb
-index fc7359cfc..0630e5c69 100644
+index a25ebc4aa..b7fd0e3bc 100644
 --- a/app/models/account.rb
 +++ b/app/models/account.rb
-@@ -90,7 +90,7 @@ class Account < ApplicationRecord
+@@ -99,7 +99,7 @@ class Account < ApplicationRecord
    # Local user validations
    validates :username, format: { with: /\A[a-z0-9_]+\z/i }, length: { maximum: 30 }, if: -> { local? && will_save_change_to_username? && actor_type != 'Application' }
    validates_with UnreservedUsernameValidator, if: -> { local? && will_save_change_to_username? && actor_type != 'Application' }
@@ -10,17 +10,17 @@ index fc7359cfc..0630e5c69 100644
 +  validates :display_name, length: { maximum: 120 }, if: -> { local? && will_save_change_to_display_name? }
    validates :note, note_length: { maximum: 500 }, if: -> { local? && will_save_change_to_note? }
    validates :fields, length: { maximum: 4 }, if: -> { local? && will_save_change_to_fields? }
- 
+   validates :uri, absence: true, if: :local?, on: :create
 diff --git a/app/views/settings/profiles/show.html.haml b/app/views/settings/profiles/show.html.haml
-index 3067b3737..f3da719b7 100644
+index 7c13dc7f4..4178dc3aa 100644
 --- a/app/views/settings/profiles/show.html.haml
 +++ b/app/views/settings/profiles/show.html.haml
-@@ -9,7 +9,7 @@
- 
+@@ -15,7 +15,7 @@
    .fields-row
-     .fields-row__column.fields-group.fields-row__column-6
--      = f.input :display_name, wrapper: :with_label, input_html: { maxlength: 30, data: { default: @account.username } }, hint: false
-+      = f.input :display_name, wrapper: :with_label, input_html: { maxlength: 120, data: { default: @account.username } }, hint: false
-       = f.input :note, wrapper: :with_label, input_html: { maxlength: 500 }, hint: false
+     .fields-row__column.fields-row__column-6
+       .fields-group
+-        = f.input :display_name, wrapper: :with_block_label, input_html: { maxlength: 30, data: { default: @account.username } }
++        = f.input :display_name, wrapper: :with_block_label, input_html: { maxlength: 120, data: { default: @account.username } }
  
-   .fields-row
+       .fields-group
+         = f.input :note, wrapper: :with_block_label, input_html: { maxlength: 500 }

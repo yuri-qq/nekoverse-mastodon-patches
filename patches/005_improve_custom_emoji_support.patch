@@ -1,8 +1,8 @@
 diff --git a/app/models/custom_emoji.rb b/app/models/custom_emoji.rb
-index 304805659..ab5802dd2 100644
+index 717de2772..4ba8f496d 100644
 --- a/app/models/custom_emoji.rb
 +++ b/app/models/custom_emoji.rb
-@@ -23,7 +23,7 @@
+@@ -24,7 +24,7 @@
  class CustomEmoji < ApplicationRecord
    include Attachmentable
  
@@ -11,7 +11,7 @@ index 304805659..ab5802dd2 100644
  
    SHORTCODE_RE_FRAGMENT = '[a-zA-Z0-9_]{2,}'
  
-@@ -32,7 +32,7 @@ class CustomEmoji < ApplicationRecord
+@@ -33,7 +33,7 @@ class CustomEmoji < ApplicationRecord
      (?=[^[:alnum:]:]|$)/x
    SHORTCODE_ONLY_RE = /\A#{SHORTCODE_RE_FRAGMENT}\z/
  
@@ -19,12 +19,12 @@ index 304805659..ab5802dd2 100644
 +  IMAGE_MIME_TYPES = %w(image/png image/gif image/webp image/jpeg image/svg+xml).freeze
  
    belongs_to :category, class_name: 'CustomEmojiCategory', optional: true
-   has_one :local_counterpart, -> { where(domain: nil) }, class_name: 'CustomEmoji', primary_key: :shortcode, foreign_key: :shortcode
+ 
 diff --git a/config/locales/en.yml b/config/locales/en.yml
-index 679e356b4..f41f98066 100644
+index 71b8f27aa..97c4fa375 100644
 --- a/config/locales/en.yml
 +++ b/config/locales/en.yml
-@@ -322,7 +322,7 @@ en:
+@@ -327,7 +327,7 @@ en:
        enable: Enable
        enabled: Enabled
        enabled_msg: Successfully enabled that emoji
