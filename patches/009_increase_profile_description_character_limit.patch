@@ -1,0 +1,26 @@
+diff --git a/app/models/account.rb b/app/models/account.rb
+index a25ebc4aa..8ea01b8a2 100644
+--- a/app/models/account.rb
++++ b/app/models/account.rb
+@@ -100,7 +100,7 @@ class Account < ApplicationRecord
+   validates :username, format: { with: /\A[a-z0-9_]+\z/i }, length: { maximum: 30 }, if: -> { local? && will_save_change_to_username? && actor_type != 'Application' }
+   validates_with UnreservedUsernameValidator, if: -> { local? && will_save_change_to_username? && actor_type != 'Application' }
+   validates :display_name, length: { maximum: 30 }, if: -> { local? && will_save_change_to_display_name? }
+-  validates :note, note_length: { maximum: 500 }, if: -> { local? && will_save_change_to_note? }
++  validates :note, note_length: { maximum: 10000 }, if: -> { local? && will_save_change_to_note? }
+   validates :fields, length: { maximum: 4 }, if: -> { local? && will_save_change_to_fields? }
+   validates :uri, absence: true, if: :local?, on: :create
+   validates :inbox_url, absence: true, if: :local?, on: :create
+diff --git a/app/views/settings/profiles/show.html.haml b/app/views/settings/profiles/show.html.haml
+index 7c13dc7f4..13a4c36af 100644
+--- a/app/views/settings/profiles/show.html.haml
++++ b/app/views/settings/profiles/show.html.haml
+@@ -18,7 +18,7 @@
+         = f.input :display_name, wrapper: :with_block_label, input_html: { maxlength: 30, data: { default: @account.username } }
+ 
+       .fields-group
+-        = f.input :note, wrapper: :with_block_label, input_html: { maxlength: 500 }
++        = f.input :note, wrapper: :with_block_label, input_html: { maxlength: 10000 }
+ 
+     .fields-row__column.fields-group.fields-row__column-6
+       .input.with_block_label
