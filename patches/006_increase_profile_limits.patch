@@ -1,22 +1,39 @@
 diff --git a/app/models/account.rb b/app/models/account.rb
-index a25ebc4aa..8ea01b8a2 100644
+index a25ebc4aa..713e99016 100644
 --- a/app/models/account.rb
 +++ b/app/models/account.rb
-@@ -100,7 +100,7 @@ class Account < ApplicationRecord
+@@ -99,9 +99,9 @@ class Account < ApplicationRecord
+   # Local user validations
    validates :username, format: { with: /\A[a-z0-9_]+\z/i }, length: { maximum: 30 }, if: -> { local? && will_save_change_to_username? && actor_type != 'Application' }
    validates_with UnreservedUsernameValidator, if: -> { local? && will_save_change_to_username? && actor_type != 'Application' }
-   validates :display_name, length: { maximum: 30 }, if: -> { local? && will_save_change_to_display_name? }
+-  validates :display_name, length: { maximum: 30 }, if: -> { local? && will_save_change_to_display_name? }
 -  validates :note, note_length: { maximum: 500 }, if: -> { local? && will_save_change_to_note? }
+-  validates :fields, length: { maximum: 4 }, if: -> { local? && will_save_change_to_fields? }
++  validates :display_name, length: { maximum: 240 }, if: -> { local? && will_save_change_to_display_name? }
 +  validates :note, note_length: { maximum: 10000 }, if: -> { local? && will_save_change_to_note? }
-   validates :fields, length: { maximum: 4 }, if: -> { local? && will_save_change_to_fields? }
++  validates :fields, length: { maximum: 8 }, if: -> { local? && will_save_change_to_fields? }
    validates :uri, absence: true, if: :local?, on: :create
    validates :inbox_url, absence: true, if: :local?, on: :create
+   validates :shared_inbox_url, absence: true, if: :local?, on: :create
+@@ -344,7 +344,7 @@ class Account < ApplicationRecord
+     self[:fields] = fields
+   end
+ 
+-  DEFAULT_FIELDS_SIZE = 4
++  DEFAULT_FIELDS_SIZE = 8
+ 
+   def build_fields
+     return if fields.size >= DEFAULT_FIELDS_SIZE
 diff --git a/app/views/settings/profiles/show.html.haml b/app/views/settings/profiles/show.html.haml
-index 7c13dc7f4..13a4c36af 100644
+index 7c13dc7f4..4224ea833 100644
 --- a/app/views/settings/profiles/show.html.haml
 +++ b/app/views/settings/profiles/show.html.haml
-@@ -18,7 +18,7 @@
-         = f.input :display_name, wrapper: :with_block_label, input_html: { maxlength: 30, data: { default: @account.username } }
+@@ -15,10 +15,10 @@
+   .fields-row
+     .fields-row__column.fields-row__column-6
+       .fields-group
+-        = f.input :display_name, wrapper: :with_block_label, input_html: { maxlength: 30, data: { default: @account.username } }
++        = f.input :display_name, wrapper: :with_block_label, input_html: { maxlength: 240, data: { default: @account.username } }
  
        .fields-group
 -        = f.input :note, wrapper: :with_block_label, input_html: { maxlength: 500 }
