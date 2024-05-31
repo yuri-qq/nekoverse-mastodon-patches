@@ -7,7 +7,7 @@ index 9222b2dc8..c6f8052b1 100644
      const isOnlyWhitespace = fulltext.length !== 0 && fulltext.trim().length === 0;
  
 -    return !(isSubmitting || isUploading || isChangingUpload || length(fulltext) > 500 || (isOnlyWhitespace && !anyMedia));
-+    return !(isSubmitting || isUploading || isChangingUpload || length(fulltext) > 10000 || (isOnlyWhitespace && !anyMedia));
++    return !(isSubmitting || isUploading || isChangingUpload || length(fulltext) > 51000 || (isOnlyWhitespace && !anyMedia));
    };
  
    handleSubmit = (e) => {
@@ -16,7 +16,7 @@ index 9222b2dc8..c6f8052b1 100644
  
              <div className='character-counter__wrapper'>
 -              <CharacterCounter max={500} text={this.getFulltextForCharacterCounting()} />
-+              <CharacterCounter max={10000} text={this.getFulltextForCharacterCounting()} />
++              <CharacterCounter max={51000} text={this.getFulltextForCharacterCounting()} />
              </div>
            </div>
          </div>
@@ -29,7 +29,7 @@ index dc841ded3..91069040b 100644
  
  class StatusLengthValidator < ActiveModel::Validator
 -  MAX_CHARS = 500
-+  MAX_CHARS = 10000
++  MAX_CHARS = 51000
    URL_PLACEHOLDER_CHARS = 23
    URL_PLACEHOLDER = 'x' * 23
  
