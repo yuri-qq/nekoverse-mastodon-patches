@@ -1,0 +1,26 @@
+diff --git a/app/javascript/mastodon/features/compose/containers/compose_form_container.js b/app/javascript/mastodon/features/compose/containers/compose_form_container.js
+index bda2edba6..6259d608d 100644
+--- a/app/javascript/mastodon/features/compose/containers/compose_form_container.js
++++ b/app/javascript/mastodon/features/compose/containers/compose_form_container.js
+@@ -28,7 +28,7 @@ const mapStateToProps = state => ({
+   anyMedia: state.getIn(['compose', 'media_attachments']).size > 0,
+   isInReply: state.getIn(['compose', 'in_reply_to']) !== null,
+   lang: state.getIn(['compose', 'language']),
+-  maxChars: state.getIn(['server', 'server', 'configuration', 'statuses', 'max_characters'], 500),
++  maxChars: state.getIn(['server', 'server', 'configuration', 'statuses', 'max_characters'], 10000),
+ });
+ 
+ const mapDispatchToProps = (dispatch) => ({
+diff --git a/app/validators/status_length_validator.rb b/app/validators/status_length_validator.rb
+index dc841ded3..91069040b 100644
+--- a/app/validators/status_length_validator.rb
++++ b/app/validators/status_length_validator.rb
+@@ -1,7 +1,7 @@
+ # frozen_string_literal: true
+ 
+ class StatusLengthValidator < ActiveModel::Validator
+-  MAX_CHARS = 500
++  MAX_CHARS = 10000
+   URL_PLACEHOLDER_CHARS = 23
+   URL_PLACEHOLDER = 'x' * 23
+ 

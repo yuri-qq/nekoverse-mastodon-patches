@@ -1,5 +1,5 @@
 diff --git a/app/models/custom_emoji.rb b/app/models/custom_emoji.rb
-index 717de2772..4ba8f496d 100644
+index f1423bc2f..f669d924c 100644
 --- a/app/models/custom_emoji.rb
 +++ b/app/models/custom_emoji.rb
 @@ -24,7 +24,7 @@
@@ -8,10 +8,10 @@ index 717de2772..4ba8f496d 100644
  
 -  LIMIT = 256.kilobytes
 +  LIMIT = 4.megabytes
+   MINIMUM_SHORTCODE_SIZE = 2
  
    SHORTCODE_RE_FRAGMENT = '[a-zA-Z0-9_]{2,}'
- 
-@@ -33,7 +33,7 @@ class CustomEmoji < ApplicationRecord
+@@ -34,7 +34,7 @@ class CustomEmoji < ApplicationRecord
      (?=[^[:alnum:]:]|$)/x
    SHORTCODE_ONLY_RE = /\A#{SHORTCODE_RE_FRAGMENT}\z/
  
@@ -21,10 +21,10 @@ index 717de2772..4ba8f496d 100644
    belongs_to :category, class_name: 'CustomEmojiCategory', optional: true
  
 diff --git a/config/locales/en.yml b/config/locales/en.yml
-index 71b8f27aa..97c4fa375 100644
+index 2b72b9436..da94b17dd 100644
 --- a/config/locales/en.yml
 +++ b/config/locales/en.yml
-@@ -327,7 +327,7 @@ en:
+@@ -332,7 +332,7 @@ en:
        enable: Enable
        enabled: Enabled
        enabled_msg: Successfully enabled that emoji

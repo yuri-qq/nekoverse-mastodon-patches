@@ -1,5 +1,5 @@
 diff --git a/app/models/concerns/attachmentable.rb b/app/models/concerns/attachmentable.rb
-index c0ee1bdce..ea7e6743e 100644
+index a83e178fc..ba5144f7e 100644
 --- a/app/models/concerns/attachmentable.rb
 +++ b/app/models/concerns/attachmentable.rb
 @@ -5,7 +5,7 @@ require 'mime/types/columnar'
@@ -12,7 +12,7 @@ index c0ee1bdce..ea7e6743e 100644
  
    # For some file extensions, there exist different content
 diff --git a/app/models/media_attachment.rb b/app/models/media_attachment.rb
-index b567003fb..153ca27c2 100644
+index 6708cd779..dcf71bc6a 100644
 --- a/app/models/media_attachment.rb
 +++ b/app/models/media_attachment.rb
 @@ -70,7 +70,7 @@ class MediaAttachment < ApplicationRecord
