@@ -1,18 +1,18 @@
 diff --git a/app/javascript/mastodon/features/compose/containers/compose_form_container.js b/app/javascript/mastodon/features/compose/containers/compose_form_container.js
-index 15ccabf74..a1a38fd4e 100644
+index c5cffff10d..031d3811ed 100644
 --- a/app/javascript/mastodon/features/compose/containers/compose_form_container.js
 +++ b/app/javascript/mastodon/features/compose/containers/compose_form_container.js
-@@ -31,7 +31,7 @@ const mapStateToProps = state => ({
-   missingAltText: state.getIn(['compose', 'media_attachments']).some(media => ['image', 'gifv'].includes(media.get('type')) && (media.get('description') ?? '').length === 0),
+@@ -58,7 +58,7 @@ const mapStateToProps = state => ({
+     && !state.getIn(['settings', 'dismissed_banners', PRIVATE_QUOTE_MODAL_ID]),
    isInReply: state.getIn(['compose', 'in_reply_to']) !== null,
    lang: state.getIn(['compose', 'language']),
--  maxChars: state.getIn(['server', 'server', 'configuration', 'statuses', 'max_characters'], 500),
-+  maxChars: state.getIn(['server', 'server', 'configuration', 'statuses', 'max_characters'], 10000),
+-  maxChars: state.getIn(['server', 'server', 'item', 'configuration', 'statuses', 'max_characters'], 500),
++  maxChars: state.getIn(['server', 'server', 'item', 'configuration', 'statuses', 'max_characters'], 10000),
  });
  
- const mapDispatchToProps = (dispatch) => ({
+ const mapDispatchToProps = (dispatch, props) => ({
 diff --git a/app/validators/status_length_validator.rb b/app/validators/status_length_validator.rb
-index 575aaf186..3ce91bda8 100644
+index 575aaf1869..3ce91bda87 100644
 --- a/app/validators/status_length_validator.rb
 +++ b/app/validators/status_length_validator.rb
 @@ -1,7 +1,7 @@
